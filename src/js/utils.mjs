@@ -9,7 +9,8 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   const data = localStorage.getItem(key);
   try {
-    return data ? JSON.parse(data) : [];
+    const parsed = data ? JSON.parse(data) : [];
+    return Array.isArray(parsed) ? parsed : []; 
   } catch (e) {
     console.error("Error parsing localStorage for key:", key);
     return [];
