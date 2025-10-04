@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 
 export default class ProductDetails {
 
@@ -21,9 +21,14 @@ export default class ProductDetails {
   }
 
   addProductToCart() {
+    
     const cartItems = getLocalStorage("so-cart") || [];
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
+
+
+    // Alert the user that the product has been added to the cart.
+    alertMessage("Product added to cart", "success", ".product-details");
   }
 
   renderProductDetails() {

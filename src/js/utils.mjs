@@ -7,7 +7,13 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  const data = localStorage.getItem(key);
+  try {
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error("Error parsing localStorage for key:", key);
+    return [];
+  }
 }
 // save data to local storage
 export function setLocalStorage(key, data) {
@@ -61,4 +67,28 @@ export async function loadHeaderFooter() {
 
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
+}
+
+export function alertMessage(message, scroll = true) {
+  // Create container
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.innerHTML = `
+    <p>${message}</p>
+    <span class="close-alert">✕</span>
+  `;
+
+  // Add dismiss functionality
+  alert.addEventListener("click", (e) => {
+    if (e.target.classList.contains("close-alert") || e.target.tagName === "SPAN") {
+      alert.remove();
+    }
+  });
+
+  // Add to top of main content
+  const main = document.querySelector("main");
+  main.prepend(alert);
+
+  // Scroll to top if requested
+  if (scroll) window.scrollTo(0, 0);
 }
