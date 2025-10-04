@@ -69,6 +69,9 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
+export function removeAllAlerts() {
+  document.querySelectorAll(".alert").forEach(alert => alert.remove());
+}
 
 export function alertMessage(message, scroll = true) {
   // Create container
@@ -92,4 +95,5 @@ export function alertMessage(message, scroll = true) {
 
   // Scroll to top if requested
   if (scroll) window.scrollTo(0, 0);
+  
 }
