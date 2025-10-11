@@ -26,6 +26,8 @@ export default class ExternalServices {
     return data.Result;
   }
 
+  
+
   async checkout(payload) {
     const options = {
       method: "POST",
@@ -36,4 +38,21 @@ export default class ExternalServices {
     };
     return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
   }
+  async searchAllCategories(query) {
+  const categories = ["backpacks", "tents", "sleepingbags", "hammocks"];
+  const allProducts = [];
+
+  // Fetch all categories in parallel
+  const promises = categories.map((cat) => this.getData(cat));
+  const results = await Promise.all(promises);
+
+  // Flatten all products into one array
+  results.forEach((products) => allProducts.push(...products));
+
+  // Filter by search term using a case-insensitive RegExp
+  const regex = new RegExp(query, "i");
+  const filtered = allProducts.filter((product) => regex.test(product.Name));
+
+  return filtered;
+}
 }
