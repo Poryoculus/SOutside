@@ -22,7 +22,7 @@ export default class ExternalServices {
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
-    // console.log(data.Result);
+    console.log(data.Result);
     return data.Result;
   }
 

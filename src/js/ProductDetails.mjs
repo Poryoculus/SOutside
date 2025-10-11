@@ -37,20 +37,40 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
-  document.querySelector("#p-brand").textContent = product.Brand.Name;
-  document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+  if (!product) {
+    console.error("Product is undefined!");
+    return;
+  }
 
+  // Category
+  const category = product.Category ? product.Category.charAt(0).toUpperCase() + product.Category.slice(1) : "Unknown";
+  document.querySelector("h2").textContent = category;
+
+  // Brand
+  const brandName = product.Brand?.Name || "Unknown";
+  document.querySelector("#p-brand").textContent = brandName;
+
+  // Name
+  document.querySelector("#p-name").textContent = product.NameWithoutBrand || product.Name || "Unknown";
+
+  // Image
   const productImage = document.querySelector("#p-image");
-  productImage.src = product.Images.PrimaryExtraLarge;
-  productImage.alt = product.NameWithoutBrand;
-  const euroPrice = new Intl.NumberFormat('de-DE',
-    {
-      style: 'currency', currency: 'EUR',
-    }).format(Number(product.FinalPrice) * 0.85);
-  document.querySelector("#p-price").textContent = `${euroPrice}`;
-  document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
-  document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
+  productImage.src = product.Images?.PrimaryExtraLarge || "/path/to/default-image.jpg";
+  productImage.alt = product.NameWithoutBrand || product.Name || "Product Image";
 
-  document.querySelector("#add-to-cart").dataset.id = product.Id;
+  // Price in EUR
+  const euroPrice = product.FinalPrice
+    ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(product.FinalPrice) * 0.85)
+    : "N/A";
+  document.querySelector("#p-price").textContent = euroPrice;
+
+  // Color
+  const colorName = product.Colors?.[0]?.ColorName || "N/A";
+  document.querySelector("#p-color").textContent = colorName;
+
+  // Description
+  document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple || "No description available.";
+
+  // Add to cart
+  document.querySelector("#add-to-cart").dataset.id = product.Id || "";
 }
