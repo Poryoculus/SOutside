@@ -5,6 +5,7 @@ import ProductList from "./ProductList.mjs";
 loadHeaderFooter();
 
 const category = getParam("category");
+const searchQuery = getParam("search");
 const dataSource = new ExternalServices();
 const element = document.querySelector(".product-list");
 const listing = new ProductList(category, dataSource, element);

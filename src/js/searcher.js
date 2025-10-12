@@ -39,11 +39,17 @@ if (searchQuery) {
 }
 
 // Optional: also handle form submission
-const form = qs("#search-form");
-if (form) {
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const query = qs("#search-input")?.value.trim().toLowerCase();
-    if (query) runSearch(query);
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("search-form");
+  const input = document.getElementById("search-input");
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const term = input.value.trim();
+      if (term) {
+        window.location.href = `/product-listing/index.html?search=${encodeURIComponent(term)}`;
+      }
+    });
+  }
+});
