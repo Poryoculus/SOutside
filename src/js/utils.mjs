@@ -97,16 +97,17 @@ export function alertMessage(message, scroll = true) {
   if (scroll) window.scrollTo(0, 0);
   
 document.addEventListener("DOMContentLoaded", () => {
-  const form = qs("#search-form");
-const input = qs("#search-input");
+  const form = document.getElementById("search-form");
+  const input = document.getElementById("search-input");
 
-if (form) {
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const query = input.value.trim();
-    if (query) {
-      window.location.href = `/product-listing/index.html?search=${encodeURIComponent(query)}`;
-    }
-  });
-}
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const term = input.value.trim();
+      if (term) {
+        // redirect to the product-listing page with a search query param
+        window.location.href = `/product-listing/index.html?search=${encodeURIComponent(term)}`;
+      }
+    });
+  }
 });}

@@ -28,7 +28,7 @@ export default class ProductList {
 
   // Get URL params
   const urlParams = new URLSearchParams(window.location.search);
-  const searchQuery = urlParams.get("search"); 
+  const searchQuery = urlParams.get("search"); // e.g., "Thule"
 
   let products;
   if (searchQuery) {
